@@ -92,6 +92,12 @@ private:
 	//モデルのハンドル
 	int m_handle;
 
+	//剣で切った時のSE
+	int m_killSE;
+
+	//ダメージを負った時のSE
+	int m_damageSE;
+
 	//状態
 	int m_state;
 

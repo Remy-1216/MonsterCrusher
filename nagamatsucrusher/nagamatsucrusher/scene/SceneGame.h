@@ -26,6 +26,9 @@ private:
 private:
 	//最後の敵を倒せたか
 	void GameClear();
+
+	//フェードイン、アウト
+	void Fade();
 private:
 
 	//背景のハンドル
@@ -36,6 +39,12 @@ private:
 
 	//BGM
 	int m_bgm;
+
+	//フェードイン、アウト
+	int m_fadeAlpha;
+
+	//シーン終了フラグ
+	bool m_isSceneEnd;
 
 	//ゲームクリアなのかのフラグ
 	bool m_isGameClear;

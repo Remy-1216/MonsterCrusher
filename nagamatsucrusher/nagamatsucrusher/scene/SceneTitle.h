@@ -44,11 +44,20 @@ private:
 	//ハンドル
 	int m_handle;
 
+	//フェードイン、アウト
+	int m_fadeAlpha;
+
+	//決定音
+	int m_decisionSE;
+
 	//モデル
 	int m_modelHandle;
 
 	//BGM
 	int m_bgm;
+
+	//シーン終了フラグ
+	bool m_isSceneEnd;	
 
 	//モデルの座標
 	VECTOR m_pos;

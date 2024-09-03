@@ -3,6 +3,7 @@
 #include "SceneGame.h"
 #include "SceneResult.h"
 #include "Pad.h"
+#include "Game.h"
 
 
 namespace
@@ -32,6 +33,12 @@ namespace
 	//アニメーションの切り替えにかかるフレーム数
 	constexpr float kAnimChangeFrame = 4.0f;
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;
+
+	//フェードイン、フェードアウトの数値
+	constexpr int kFadeValue = 255;
+
+	//フェード値の増減
+	constexpr int kFadeUpDown = 8;
 	
 }
 
@@ -45,6 +52,8 @@ SceneTitle::~SceneTitle()
 	DeleteGraph(m_handle);
 
 	DeleteSoundMem(m_bgm);
+
+	DeleteSoundMem(m_decisionSE);
 
 	MV1DeleteModel(m_modelHandle);
 }
@@ -68,8 +77,11 @@ void SceneTitle::Init()
 
 	SetFontSize(kFontSize);
 
+	m_isSceneEnd = false;	
 
 	m_bgm = LoadSoundMem("data/BGM/start.mp3");
+
+	m_decisionSE = LoadSoundMem("data/SE/decision.mp3");
 
 	m_pos = VGet(kPosX, kPosY, kPosZ);
 
@@ -81,8 +93,17 @@ void SceneTitle::Init()
 std::shared_ptr<SceneBase> SceneTitle::Update()
 {
 
-	//一定の場所でAボタンを押すと移行する
+	//Aボタンを押すと移行する
 	if (Pad::IsTrigger(PAD_INPUT_A))
+	{
+		m_isSceneEnd = true;
+
+		PlaySoundMem(m_decisionSE, DX_PLAYTYPE_BACK);
+
+		
+	}
+
+	if (m_isSceneEnd && m_fadeAlpha >= kFadeValue)
 	{
 		return std::make_shared<SceneGame>();
 	}
@@ -94,7 +115,23 @@ std::shared_ptr<SceneBase> SceneTitle::Update()
 	//モデルの位置更新
 	MV1SetPosition(m_modelHandle, m_pos);
 
-	
+	//フレームイン、アウト
+	if (m_isSceneEnd)
+	{
+		m_fadeAlpha += kFadeUpDown;
+		if (m_fadeAlpha > kFadeValue)
+		{
+			m_fadeAlpha = kFadeValue;
+		}
+	}
+	else
+	{
+		m_fadeAlpha -= kFadeUpDown;
+		if (m_fadeAlpha < 0)
+		{
+			m_fadeAlpha = 0;
+		}
+	}
 
 
 	return shared_from_this();
@@ -107,6 +144,12 @@ void SceneTitle::Draw()
 
 	MV1DrawModel(m_modelHandle);
 	DrawString(kFontPosX,kFontPosY,"Aボタンを押してスタート", 0x000000);
+
+
+	//フェードの描画
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeAlpha); //半透明で表示
+	DrawBox(0, 0, Game::kScreenWindidth, Game::kScreenHeight, GetColor(0, 0, 0), true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //不透明に戻しておく
 
 
 #ifdef _DEBUG

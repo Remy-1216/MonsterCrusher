@@ -93,16 +93,18 @@ namespace
 }
 
 Knight::Knight() :m_state(kWait), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1), m_count(0)
-, m_lightPos(VGet(0.0f, 0.0f, 0.0f))
+, m_lightPos(VGet(0.0f, 0.0f, 0.0f)),m_killSE(-1),m_damageSE(-1),m_isRun(false),m_pos(VGet(0.0f,0.0f,0.0f))
 {
 	m_handle = MV1LoadModel("data/model/player/knight.mv1");
-
-
 }
 
 Knight::~Knight()
 {
 	MV1DeleteModel(m_handle);
+
+	DeleteSoundMem(m_damageSE);
+
+	DeleteSoundMem(m_killSE);
 }
 
 void Knight::Init()
@@ -115,6 +117,10 @@ void Knight::Init()
 	m_pos = VGet(kPosX, kPosY, 0.0f);
 
 	m_stageClear = 0;
+
+	m_killSE = LoadSoundMem("data/SE/kill.mp3");
+
+	m_damageSE = LoadSoundMem("data/SE/damage.mp3");
 
 	m_state = kWait;
 
@@ -524,6 +530,8 @@ void Knight::ChangeAnim(int animIndex)
 //çUåÇ
 void Knight::Attack()
 {
+	PlaySoundMem(m_killSE, DX_PLAYTYPE_BACK, true);
+
 	if (m_direction == kRight)
 	{
 		m_attackCollision.SetCenter(m_pos.x + kAttackLeftXAdj, m_pos.y, m_pos.z-kAttackLeftZAdj , kModelWidth, kModelHeight, kModelDepth);
@@ -561,6 +569,8 @@ void Knight::DrawHPBar()
 void Knight::HitBody()
 {	
 	m_hp -= 5;
+
+	PlaySoundMem(m_damageSE, DX_PLAYTYPE_BACK);
 
 	if (m_direction == kUp)
 	{
