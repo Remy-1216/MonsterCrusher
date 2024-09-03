@@ -36,6 +36,10 @@ namespace
 	
 	constexpr float kStage4playerPosX = 12000.0f;
 
+	//残り人数を示す位置
+	constexpr int kRestEnemysX = 850;
+	constexpr int kRestEnemysY = 50;
+
 }
 
 EnemyManager::EnemyManager():m_timer(0),m_enemyNum(0),m_isClear1(false),m_isClear2(false),
@@ -304,19 +308,19 @@ void EnemyManager::DrawEnemys()
 	// HP の値を文字列とバーで表示
 	if (!m_isClear1)
 	{
-		DrawFormatString(850, 50, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention1);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention1);
 	}
 	else if (!m_isClear2)
 	{
-		DrawFormatString(850, 50, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention2);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention2);
 	}
 	else if (!m_isClear3)
 	{
-		DrawFormatString(850, 50, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention3);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention3);
 	}
 	else if (!m_isClear4)
 	{
-		DrawFormatString(850, 50, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention4);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention4);
 	}
 	
 }

@@ -13,6 +13,9 @@
 
 namespace
 {
+	//‘€ìà–¾‚ÌˆÊ’u
+	constexpr int kOperationX = 1110;
+	constexpr int kOperationY = 100;
 
 }
 
@@ -37,6 +40,7 @@ SceneGame::~SceneGame()
 
 
 	DeleteGraph(m_handle);
+	DeleteGraph(m_operationHandle);
 	DeleteSoundMem(m_bgm);
 
 }
@@ -58,6 +62,8 @@ void SceneGame::Init()
 	m_pStageManager->Init();
 
 	m_handle = LoadGraph("data/Bg/game.png");
+
+	m_operationHandle = LoadGraph("data/operationinstructions/operation.png");
 
 	m_bgm = LoadSoundMem("data/BGM/GamePlay.mp3");
 
@@ -120,6 +126,7 @@ void SceneGame::Draw()
 	m_pPlayer->Draw();
 	m_pEnemyManager->Draw();
 	m_pCamera->Draw();
+	DrawGraph(kOperationX, kOperationY, m_operationHandle, true);
 }
 
 void SceneGame::End()

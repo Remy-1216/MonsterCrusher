@@ -44,7 +44,9 @@ namespace
 	constexpr float kPosY = 240.0f;
 
 	//ノックバック
-	constexpr float kKnockback = 250.0f;
+	constexpr float kKnockback = 50.0f;
+
+	constexpr float kMaxKnockback = 250.0f;
 
 }
 
@@ -79,6 +81,12 @@ void Bee::HitAttack(Rect playerAttack)
 	{
 		m_hp -= 5;
 		m_pos.x += kKnockback;
+		m_attackHits++;
+	}
+	if (m_attackHits == 3)
+	{
+		m_pos.x += kMaxKnockback;
+		m_attackHits = 0;
 	}
 }
 

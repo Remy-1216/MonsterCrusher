@@ -27,8 +27,12 @@ private:
 	//ÅŒã‚Ì“G‚ğ“|‚¹‚½‚©
 	void GameClear();
 private:
+
 	//”wŒi‚Ìƒnƒ“ƒhƒ‹
 	int m_handle;
+
+	//‘€ìà–¾
+	int m_operationHandle;
 
 	//BGM
 	int m_bgm;

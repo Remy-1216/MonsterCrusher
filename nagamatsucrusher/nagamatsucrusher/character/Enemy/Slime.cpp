@@ -41,7 +41,9 @@ namespace
 	
 	constexpr float kPlayerPos3X = 6175.0f;
 	//ノックバック
-	constexpr float kKnockback = 250.0f;
+	constexpr float kKnockback = 50.0f;
+
+	constexpr float kMaxKnockback = 250.0f;
 }
 
 Slime::Slime(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1)
@@ -215,6 +217,13 @@ void Slime::HitAttack(Rect playerAttack)
 	if (m_enemyCollision.IsCollsion(playerAttack))
 	{
 		m_hp -= 5;
+		m_pos.x += kKnockback;
+		m_attackHits++;
+	}
+	if (m_attackHits == 3)
+	{
+		m_pos.x += kMaxKnockback;
+		m_attackHits = 0;
 	}
 }
 

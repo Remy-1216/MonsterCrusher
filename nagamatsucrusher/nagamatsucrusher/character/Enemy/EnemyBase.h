@@ -50,18 +50,18 @@ protected:
 	//モデルのハンドル
 	int m_handle;
 
+	//プレイヤーの攻撃ヒット回数
+	int m_attackHits;
+
 	//プレイヤーの人数
 	int m_playerNum;
-
-	//プレイヤーの攻撃ヒット回数
-	int m_playerAttackHit;
-
 
 	//攻撃に当たったかどうか
 	bool m_isHitAttack;
 
 	//プレイヤーに当たったかどうか
 	bool m_isHitPlayer;
+
 
 	//座標
 	VECTOR	 m_pos;
