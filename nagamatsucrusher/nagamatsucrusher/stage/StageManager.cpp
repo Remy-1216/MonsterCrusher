@@ -13,7 +13,7 @@ StageManager::~StageManager()
 
 void StageManager::Init()
 {
-	m_handle = MV1LoadModel("data/model/stage/kari.mv1");
+	m_handle = MV1LoadModel("data/model/stage/stage.mv1");
 	m_pStage1 = new Stage1(m_handle);
 	m_pStage1->Init();
 }

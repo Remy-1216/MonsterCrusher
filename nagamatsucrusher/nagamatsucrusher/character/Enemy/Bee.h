@@ -36,6 +36,10 @@ private:
 	//プレイヤーに近づいたら攻撃
 	void Attack();
 
+
+	//無敵
+	void InvincibleTime();
+
 	//アニメーション関連
 	void  Animation();
 

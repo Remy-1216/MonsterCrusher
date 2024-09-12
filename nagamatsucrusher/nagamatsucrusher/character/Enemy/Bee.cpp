@@ -2,6 +2,7 @@
 #include "Knight.h"
 #include "Bee.h"
 #include <math.h>
+#include "EffekseerForDXLib.h"
 
 namespace
 {
@@ -11,6 +12,8 @@ namespace
 	//敵の最大HP
 	constexpr int kMaxHp = 50;
 
+	//ダメージ数
+	constexpr int kDamageNum = 10;
 
 	//アニメーションの切り替えにかかるフレーム数
 	constexpr float kAnimChangeFrame = 4.0f;
@@ -18,9 +21,6 @@ namespace
 
 	//アニメーション
 	constexpr int kRunAnimIndex = 2;
-	constexpr int kAttackAnimIndex = 0;
-	constexpr int kDamageAnimIndex = 3;
-	constexpr int kDeathAnimIndex = 1;
 
 	//発生位置
 	constexpr int kAppearanceX = 750;
@@ -40,6 +40,8 @@ namespace
 
 	constexpr float kPlayerPos3X = 6175.0f;
 
+	constexpr float kPlayerPos4X = 12000.0f;
+
 	//ハチの初期位置
 	constexpr float kPosY = 240.0f;
 
@@ -48,6 +50,9 @@ namespace
 
 	constexpr float kMaxKnockback = 250.0f;
 
+	//無敵時間
+	constexpr int  kInvincibleTime = 20; 
+
 }
 
 Bee::Bee(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1),m_isAttacking(false),m_isAttack(false), m_playerNum(1)
@@ -55,7 +60,14 @@ Bee::Bee(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRate(-1
 	//アニメーションの初期設定
 	m_currentAnimNo = MV1AttachAnim(m_handle, kRunAnimIndex, -1, true);
 
+	//HPの初期設定
 	m_hp = kMaxHp;
+
+	//無敵時間の設定
+	m_invincibleTime = kInvincibleTime;
+	
+	//初期化
+	m_isHitAttack = false;
 
 	//座標設定
 	SetPosX(playerPos);
@@ -67,26 +79,38 @@ Bee::~Bee()
 }
 void Bee::Update(Knight* knight,VECTOR playerPos)
 {
-	ComingPlayer(knight);
+	if (!m_isHitAttack)
+	{
+		//プレイヤーに近づく
+		ComingPlayer(knight);
 
-	Animation();
+		//アニメーション
+		Animation();
+	}
 
+
+	//無敵時間
+	InvincibleTime();
+
+	//当たり判定の更新
 	m_enemyCollision.SetCenter(m_pos.x - kAdj, m_pos.y, m_pos.z - kAdj, kModelWidth, kModelHeight, kModelDepth);
 }
 
 
 void Bee::HitAttack(Rect playerAttack)
 {
-	if (m_enemyCollision.IsCollsion(playerAttack))
+	if (m_enemyCollision.IsCollsion(playerAttack) &&!m_isHitAttack)
 	{
-		m_hp -= 5;
-		m_pos.x += kKnockback;
-		m_attackHits++;
+
+		PlaySoundMem(m_damageSE, DX_PLAYTYPE_BACK);
+
+		m_hp -= kDamageNum;
+
+		m_isHitAttack = true;
 	}
-	if (m_attackHits == 3)
+	else
 	{
-		m_pos.x += kMaxKnockback;
-		m_attackHits = 0;
+		m_state = kMove;
 	}
 }
 
@@ -100,19 +124,25 @@ void Bee::HitPlayer(Knight* knight, Rect playerCollision)
 
 void Bee::SetPosX(VECTOR playerPos)
 {
-	if (playerPos.x <= kPlayerPos1X)
+	if (playerPos.x < kPlayerPos1X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
 		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
 	}
-	else if (playerPos.x <= kPlayerPos2X)
+	else if (playerPos.x < kPlayerPos2X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
 		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
 	}
-	else if (playerPos.x <= kPlayerPos3X)
+	else if (playerPos.x < kPlayerPos3X)
+	{
+		m_randomPosX = GetRand(kAppearanceX);
+		m_randomPosX = m_randomPosX + playerPos.x;
+		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
+	}
+	else if (playerPos.x < kPlayerPos4X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
@@ -132,7 +162,7 @@ void Bee::ComingPlayer(Knight* knight)
 	toTarget = VNorm(toTarget);
 	//kSpeedでかける
 	m_distance.x = toTarget.x * kSpeed;
-	m_distance.y = toTarget.y * kSpeed;
+	m_distance.y = toTarget.y;
 	m_distance.z = toTarget.z * kSpeed;
 
 	m_pos = VAdd(m_pos, m_distance);
@@ -164,8 +194,27 @@ void Bee::ComingPlayer(Knight* knight)
 
 void Bee::Attack()
 {
-	m_isAttack = true;
-	m_state = kAttack;
+	//m_isAttack = true;
+	//m_state = kAttack;
+}
+
+void Bee::InvincibleTime()
+{
+	if (!m_isHitAttack)
+	{
+		m_invincibleTime = kInvincibleTime;
+	}
+	if (m_isHitAttack)
+	{
+		m_invincibleTime--;
+	}
+
+	if (m_invincibleTime <= 0)
+	{
+		m_invincibleTime = kInvincibleTime;
+		m_isHitAttack = false;
+	}
+
 }
 
 void Bee::Animation()
@@ -191,28 +240,6 @@ void Bee::Animation()
 		{
 			ChangeAnim(kRunAnimIndex);
 		}
-		
-		
-	}
-	if (m_state == kAttack)
-	{
-
-		if (m_isAttacking != m_isAttack)
-		{
-			m_isAttacking = m_isAttack;
-			if (m_isAttacking)
-			{
-				ChangeAnim(kAttackAnimIndex);
-			}
-		}		
-	}
-	if (m_state == kDamage)
-	{
-
-	}
-	if (m_state == kDeath)
-	{
-
 	}
 }
 

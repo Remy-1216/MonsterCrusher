@@ -76,14 +76,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,7 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -103,7 +103,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,15 +112,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;G:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;G:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -130,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -139,7 +142,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -179,14 +182,21 @@
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\SceneResult.h" />
     <ClInclude Include="scene\SceneTitle.h" />
-    <ClInclude Include="StageBase.h" />
     <ClInclude Include="stage\Stage1.h" />
+    <ClInclude Include="stage\StageBase.h" />
     <ClInclude Include="stage\StageManager.h" />
     <ClInclude Include="util\Game.h" />
     <ClInclude Include="util\LoadData.h" />
     <ClInclude Include="util\Pad.h" />
     <ClInclude Include="util\Rect.h" />
+    <ClInclude Include="util\resource.h" />
     <ClInclude Include="util\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nagamatsucrusher.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\icon\icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,6 +31,9 @@ private:
 	//プレイヤーに少しづつ近づく
 	void ComingPlayer(Knight* knight);
 
+	//無敵
+	void InvincibleTime();
+
 	//アニメーション関連
 	void  Animation();
 

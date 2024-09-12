@@ -1,5 +1,5 @@
 #pragma once
-#include "stagebase.h"
+#include "StageBase.h"
 class Stage1 :public StageBase
 {
 public:
@@ -10,9 +10,6 @@ public:
 	void Update() override;
 
 private:
-
-	//条件をクリアしないと先に進めない
-	void StageSetting(bool clear);
 
 	//先に進めないようにする
 	void Hooped();

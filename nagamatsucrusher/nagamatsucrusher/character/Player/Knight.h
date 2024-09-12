@@ -7,7 +7,7 @@ public:
 	virtual ~Knight();
 
 	void Init();
-	void Update(VECTOR cameraPos);
+	void Update(float cameraAngle);
 	void Draw();
 
 	//敵と当たった時の処理
@@ -31,15 +31,17 @@ public:
 	//攻撃の当たり判定を与える
 	Rect GetAttackCollision() const noexcept { return m_attackCollision; }
 
+	
 private:
 
 	//操作
-	void Operarion(VECTOR cameraPos);
-	//ジャンプ時の処理
-	void JumpProcess();
+	void Operarion(float cameraAngle);
 
 	//ステージ外に出ないようにする処理
 	void StageProcess();
+
+	//どっち向いているのか
+	void DirectionFacing();
 
 	//ボタンを押したときのカウントを一定時間過ぎると初期化する処理
 	void ButtonCountProcess();
@@ -60,8 +62,9 @@ private:
 	//HPバー表示
 	void DrawHPBar();
 
-	//魔法攻撃
-	//void AttackMagic();
+	//無敵
+	void InvincibleTime();
+
 
 private:
 
@@ -71,17 +74,20 @@ private:
 		kWait,			//待機中
 		kMove,			//動いている
 		kAttack,		//攻撃中
-		kAerialSlash,	//空中斬り中
-		kAttackMagic	//魔法攻撃中
 	};
 
 	//プレイヤーがどちらを向いているか
 	enum direction
 	{
-		kRight,
-		kLeft,
-		kUp,
-		kDown
+		kRight,					//右
+		kLeft,					//左
+		kBefore,				//前
+		kBehind,				//後ろ
+		kDiagonallyRightFront,	//右斜め前
+		kDiagonallyLeftFront,	//左斜め前
+		kRightDiagonalBack,		//右斜め後ろ
+		kLeftDiagonalBack		//左斜め後ろ
+
 	};
 
 private:
@@ -92,20 +98,29 @@ private:
 	//モデルのハンドル
 	int m_handle;
 
+	//出血エフェクトのハンドル
+	int m_bloodHandle;
+
 	//剣で切った時のSE
 	int m_killSE;
 
 	//ダメージを負った時のSE
 	int m_damageSE;
 
-	//状態
+	//再生中のエフェクトハンドル
+	int m_playingEffectHandle;
+
+	//エフェクトの再生時間
+	int m_timer;
+
+	//現在の状態
 	int m_state;
+
+	//ノックバック
+	int m_knockBack;
 
 	//向いている方向
 	int m_direction;
-
-	//Aボタンを何回押したか
-	int m_countAButton;
 
 	//Xボタンを何回押したか
 	int m_countXButton;
@@ -113,32 +128,37 @@ private:
 	//ステージクリア
 	int m_stageClear;
 
-	//重力
-	float m_gravity;
-
 	//ボタンのリセット
 	int m_count;
 
+	//無敵時間
+	int m_invincibleTime;
+
+	//重力
+	float m_gravity;
 
 	//アニメーション情報
 	int m_currentAnimNo;	//現在のアニメーション
 	int m_prevAnimNo;		//変更前のアニメーション
 	float m_animBlendRate;	//アニメーション合成割合
 
-	//動いているかを保持する
-	bool m_isMove;
-
-	//攻撃しているかを保持する
-	bool m_isAttacking;
+	//プレイヤーの向いている方向
+	float m_playerAngle;
 
 	//走っているかどうか
 	bool m_isRun;
 
+	//走っているかを保持する
+	bool m_isMove;
+
 	//攻撃しているかどうか
 	bool m_isAttack;
+	
+	//攻撃しているかを保持する
+	bool m_isAttacking;
 
-	//ジャンプしているかどうか
-	bool m_isJump;
+	//敵とあたったかどうか
+	bool m_isHit;
 
 	//Hpが0になったかどうか
 	bool m_isHp0;
@@ -146,11 +166,26 @@ private:
 	//座標
 	VECTOR m_pos;
 
-	//カメラの位置
-	VECTOR m_cameraPos;
+	//移動量
+	VECTOR m_move;
+
+	//
+	VECTOR m_movementDirection;
+
+	//カメラの前方ベクトル
+	VECTOR m_cameraForward;
+
+	//カメラの右方向ベクトル
+	VECTOR m_cameraRight;
 
 	//ライトの位置
 	VECTOR m_lightPos;
+
+	//カメラのマトリックス
+	MATRIX m_rotMatrix;
+
+	// モデルの回転行列を作成
+	MATRIX m_modelRotMatrix;
 
 	//当たり判定
 	//プレイヤーの当たり判定

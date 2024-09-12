@@ -17,9 +17,6 @@ public:
 	//プレイヤーの位置によって生成する位置を変える
 	virtual void SetPosX(VECTOR playerPos)abstract;
 
-	//ダメージ
-	void OnDamage();
-
 	void End();
 
 	//座標の設定
@@ -50,11 +47,23 @@ protected:
 	//モデルのハンドル
 	int m_handle;
 
-	//プレイヤーの攻撃ヒット回数
-	int m_attackHits;
+	//攻撃を受けた時のSE
+	int m_damageSE;
+
+	//出血エフェクトのハンドル
+	int m_bloodHandle;
+
+	//エフェクトの再生時間
+	int m_timer;
+
+	//再生中のエフェクトハンドル
+	int m_playingEffectHandle;
 
 	//プレイヤーの人数
-	int m_playerNum;
+	int m_playerNum;	
+	
+	//無敵時間
+	int m_invincibleTime;
 
 	//攻撃に当たったかどうか
 	bool m_isHitAttack;

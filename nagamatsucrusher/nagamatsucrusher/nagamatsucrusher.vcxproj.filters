@@ -167,9 +167,6 @@
     <ClInclude Include="util\LoadData.h">
       <Filter>ヘッダー ファイル\util</Filter>
     </ClInclude>
-    <ClInclude Include="StageBase.h">
-      <Filter>ヘッダー ファイル\stage</Filter>
-    </ClInclude>
     <ClInclude Include="stage\Stage1.h">
       <Filter>ヘッダー ファイル\stage</Filter>
     </ClInclude>
@@ -185,5 +182,21 @@
     <ClInclude Include="character\Enemy\Boss.h">
       <Filter>ヘッダー ファイル\character\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="stage\StageBase.h">
+      <Filter>ヘッダー ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="util\resource.h">
+      <Filter>ヘッダー ファイル\util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nagamatsucrusher.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\icon\icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>

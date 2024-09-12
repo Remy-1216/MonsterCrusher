@@ -15,8 +15,8 @@ public:
 
     void Draw();
 
-    VECTOR GetCameraPos() const noexcept { return m_cameraPos; }
-
+    //カメラのアングルを取得する
+    float GetCameraAngle() const noexcept { return m_cameraAngle; }
 private:
 
     //ジョイパッドの出力
@@ -25,10 +25,7 @@ private:
     //ジョイパッドの出力の保持
     int m_pad;
 
-    // 水平角度
-    float m_angleH;	
-
-
+    //カメラアングルの位置
     float m_cameraAngle;
 
     //カメラの座標

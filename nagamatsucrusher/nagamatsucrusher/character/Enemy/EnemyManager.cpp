@@ -37,13 +37,13 @@ namespace
 	constexpr float kStage4playerPosX = 12000.0f;
 
 	//残り人数を示す位置
-	constexpr int kRestEnemysX = 850;
+	constexpr int kRestEnemysX = 1350;
 	constexpr int kRestEnemysY = 50;
 
 }
 
 EnemyManager::EnemyManager():m_timer(0),m_enemyNum(0),m_isClear1(false),m_isClear2(false),
-m_isClear3(false),m_isClear4(false)
+m_isClear3(false),m_isClear4(false),m_isClear(false)
 {
 	m_beeHandle = MV1LoadModel("data/model/Enemy/Bee.mv1");
 	m_slimeHandle = MV1LoadModel("data/model/Enemy/Slime.mv1");
@@ -83,13 +83,15 @@ void EnemyManager::Init()
 
 void EnemyManager::Update(Knight* knight,VECTOR playerPos, Rect playerCollision, Rect playerAttackCollision)
 {
-
+	//敵の生成
 	CreateEnemy(playerPos);
 
+	//ステージクリアしたか
 	StageClear(playerPos);
 	
 	for (int i = 0; i < kEnemyNum; i++)
 	{
+		//ハチの動き
 		if (m_pBee[i])
 		{
 			m_pBee[i]->Update(knight,playerPos);
@@ -118,7 +120,7 @@ void EnemyManager::Update(Knight* knight,VECTOR playerPos, Rect playerCollision,
 				}
 				else if (playerPos.x < kStage4playerPosX)
 				{
-					m_enemyNumRetention3--;
+					m_enemyNumRetention4--;
 				}
 				delete m_pBee[i];
 				m_pBee[i] = nullptr;
@@ -126,6 +128,8 @@ void EnemyManager::Update(Knight* knight,VECTOR playerPos, Rect playerCollision,
 
 			
 		}
+
+		//スライムの動き
 		if (m_pSlime[i])
 		{
 			m_pSlime[i]->Update(knight, playerPos);
@@ -140,19 +144,19 @@ void EnemyManager::Update(Knight* knight,VECTOR playerPos, Rect playerCollision,
 
 			if (m_slimeHp[i] <= 0)
 			{
-				if (playerPos.x < kStage1playerPosX)
+				if (playerPos.x <=  kStage1playerPosX)
 				{
 					m_enemyNumRetention1--;
 				}
-				else if (playerPos.x < kStage2playerPosX)
+				else if (playerPos.x <= kStage2playerPosX)
 				{
 					m_enemyNumRetention2--;
 				}
-				else if (playerPos.x < kStage3playerPosX)
+				else if (playerPos.x <= kStage3playerPosX)
 				{
 					m_enemyNumRetention3--;
 				}
-				else if (playerPos.x < kStage4playerPosX)
+				else if (playerPos.x <= kStage4playerPosX)
 				{
 					m_enemyNumRetention4--;
 				}
@@ -165,8 +169,10 @@ void EnemyManager::Update(Knight* knight,VECTOR playerPos, Rect playerCollision,
 
 void EnemyManager::Draw()
 {
+	//残りの敵の数を描画
 	DrawEnemys();
 
+	//存在している敵を描画
 	for (int i = 0; i < kEnemyNum; i++)
 	{
 		if (m_pBee[i])
@@ -184,94 +190,118 @@ void EnemyManager::Draw()
 	}
 }
 
+//プレイヤーの位置を参照してプレイヤーの近くにランダムで敵を生成する
 void EnemyManager::CreateEnemy(VECTOR playerPos)
 {
-	if (playerPos.x <= kStage1playerPosX)
-	{
-		if (m_enemyNum < kStage1EnemyNum)
-		{
-			m_timer++;
-			if (m_timer == kTimer)
-			{
-				m_randomEnemy = GetRand(1);
-				m_timer = 0;
 
-				if (m_randomEnemy == kBee)
-				{
-					CreateBee(playerPos);
-				}
-				if (m_randomEnemy == kSlime)
-				{
-					CreateSlime(playerPos);
-				}
-			}
-		}	
-	}
-	else if (playerPos.x <= kStage2playerPosX)
-	{
-		if (m_enemyNum < kStage2EnemyNum)
-		{
-			m_timer++;
-			if (m_timer == kTimer)
-			{
-				m_randomEnemy = GetRand(1);
-				m_timer = 0;
+	//ステージ1での生成
 
-				if (m_randomEnemy == kBee)
+	if (!m_isClear1)
+	{
+		if (playerPos.x <= kStage1playerPosX)
+		{
+			if (m_enemyNum < kStage1EnemyNum)
+			{
+				m_timer++;
+				if (m_timer == kTimer)
 				{
-					CreateBee(playerPos);
-				}
-				if (m_randomEnemy == kSlime)
-				{
-					CreateSlime(playerPos);
+					m_randomEnemy = GetRand(1);
+					m_timer = 0;
+
+					if (m_randomEnemy == kBee)
+					{
+						CreateBee(playerPos);
+					}
+					if (m_randomEnemy == kSlime)
+					{
+						CreateSlime(playerPos);
+					}
 				}
 			}
 		}
 	}
-	else if (playerPos.x <= kStage3playerPosX)
+	
+	if (!m_isClear2 && m_isClear1)
 	{
-		if (m_enemyNum < kStage3EnemyNum)
+		//ステージ2での生成
+		if (playerPos.x <= kStage2playerPosX)
 		{
-			m_timer++;
-			if (m_timer == kTimer)
+			if (m_enemyNum < kStage2EnemyNum)
 			{
-				m_randomEnemy = GetRand(1);
-				m_timer = 0;
+				m_timer++;
+				if (m_timer == kTimer)
+				{
+					m_randomEnemy = GetRand(1);
+					m_timer = 0;
 
-				if (m_randomEnemy == kBee)
-				{
-					CreateBee(playerPos);
-				}
-				if (m_randomEnemy == kSlime)
-				{
-					CreateSlime(playerPos);
+					if (m_randomEnemy == kBee)
+					{
+						CreateBee(playerPos);
+					}
+					if (m_randomEnemy == kSlime)
+					{
+						CreateSlime(playerPos);
+					}
 				}
 			}
 		}
 	}
-	else if (playerPos.x <= kStage4playerPosX)
+	
+	if (!m_isClear3 && m_isClear2)
 	{
-		if (m_enemyNum < kStage4EnemyNum)
+		//ステージ3での生成
+		if (playerPos.x <= kStage3playerPosX)
 		{
-			m_timer++;
-			if (m_timer == kTimer)
+			if (m_enemyNum < kStage3EnemyNum)
 			{
-				m_randomEnemy = GetRand(1);
-				m_timer = 0;
+				m_timer++;
+				if (m_timer == kTimer)
+				{
+					m_randomEnemy = GetRand(1);
+					m_timer = 0;
 
-				if (m_randomEnemy == kBee)
-				{
-					CreateBee(playerPos);
-				}
-				if (m_randomEnemy == kSlime)
-				{
-					CreateSlime(playerPos);
+					if (m_randomEnemy == kBee)
+					{
+						CreateBee(playerPos);
+					}
+					if (m_randomEnemy == kSlime)
+					{
+						CreateSlime(playerPos);
+					}
 				}
 			}
 		}
 	}
+	
+	if (!m_isClear4 && m_isClear3)
+	{
+		//ステージ4での生成
+		if (playerPos.x <= kStage4playerPosX)
+		{
+			if (m_enemyNum < kStage4EnemyNum)
+			{
+				m_timer++;
+				if (m_timer == kTimer)
+				{
+					m_randomEnemy = GetRand(1);
+					m_timer = 0;
+
+					if (m_randomEnemy == kBee)
+					{
+						CreateBee(playerPos);
+					}
+					if (m_randomEnemy == kSlime)
+					{
+						CreateSlime(playerPos);
+					}
+				}
+			}
+		}
+	}
+
 }
 
+//ハチの生成
 void EnemyManager::CreateBee(VECTOR playerPos)
 {
 	for (int i = 0; i < kEnemyNum; i++)
@@ -288,6 +318,7 @@ void EnemyManager::CreateBee(VECTOR playerPos)
 	}
 }
 
+//スライムの生成
 void EnemyManager::CreateSlime(VECTOR playerPos)
 {
 	for (int i = 0; i < kEnemyNum; i++)
@@ -303,6 +334,7 @@ void EnemyManager::CreateSlime(VECTOR playerPos)
 	}
 }
 
+//残りの敵の数を表示
 void EnemyManager::DrawEnemys()
 {
 	// HP の値を文字列とバーで表示
@@ -325,6 +357,7 @@ void EnemyManager::DrawEnemys()
 	
 }
 
+//ステージをクリアしたかどうか
 void EnemyManager::StageClear(VECTOR playerPos)
 {
 	if (playerPos.x < kStage1playerPosX)
@@ -332,6 +365,8 @@ void EnemyManager::StageClear(VECTOR playerPos)
 		if (m_enemyNumRetention1 == 0)
 		{
 			m_isClear1 = true;
+
+			m_enemyNum = 0;
 
 			m_isStageClear = m_isClear1;
 		}
@@ -346,6 +381,8 @@ void EnemyManager::StageClear(VECTOR playerPos)
 		{
 			m_isClear2 = true;
 
+			m_enemyNum = 0;
+
 			m_isStageClear = m_isClear2;
 		}
 		else
@@ -358,6 +395,10 @@ void EnemyManager::StageClear(VECTOR playerPos)
 		if (m_enemyNumRetention3 == 0)
 		{
 			m_isClear3 = true;
+
+			m_enemyNum = 0;
+
+			m_isStageClear = m_isClear3;
 		}
 		else
 		{
@@ -368,15 +409,17 @@ void EnemyManager::StageClear(VECTOR playerPos)
 	{
 		if (m_enemyNumRetention4 == 0)
 		{
-			m_isStageClear = true;
+			m_isClear4 = true;
+
+			m_enemyNum = 0;
+
+			m_isClear = m_isClear4;
 		}
 		else
 		{
 			m_isStageClear = false;
 		}
 	}
-	
-	
 }
 
 

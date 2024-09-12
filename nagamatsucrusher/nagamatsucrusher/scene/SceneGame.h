@@ -24,8 +24,6 @@ private:
 	EnemyManager* m_pEnemyManager;
 	StageManager* m_pStageManager;
 private:
-	//最後の敵を倒せたか
-	void GameClear();
 
 	//フェードイン、アウト
 	void Fade();
@@ -43,6 +41,9 @@ private:
 	//フェードイン、アウト
 	int m_fadeAlpha;
 
+	//カメラのアングル
+	float m_cameraAngle;
+
 	//シーン終了フラグ
 	bool m_isSceneEnd;
 
@@ -58,11 +59,11 @@ private:
 	//ステージをクリアしたか
 	bool m_isStageClear;
 
+	//クリアしたか
+	bool m_isClear;
+
 	//プレイヤーの座標
 	VECTOR m_playerPos;
-
-	//カメラの座標
-	VECTOR m_cameraPos;
 
 	//プレイヤーの当たり判定
 	Rect m_playerCollision;

@@ -16,18 +16,6 @@ void Stage1::Update()
 {
 }
 
-void Stage1::StageSetting(bool clear)
-{
-	if (clear)
-	{
-
-	}
-	else
-	{
-
-	}
-}
-
 void Stage1::Hooped()
 {
 

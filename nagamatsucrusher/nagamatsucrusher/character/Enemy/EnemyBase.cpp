@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "EffekseerForDXLib.h"
 #include "EnemyBase.h"
 
 namespace
@@ -14,17 +15,30 @@ namespace
 
 EnemyBase::EnemyBase(int ModelHandle)
 {
+	//モデルをロードする
 	m_handle = ModelHandle;
+
+	//ダメージが入った時のSEのロード
+	m_damageSE = LoadSoundMem("data/SE/Cut.mp3");
+
+	//最初の状態は動いている
 	m_state = kMove;
+
+	//モデルの大きさを変更
 	MV1SetScale(m_handle, VGet(kExpansion, kExpansion, kExpansion));
 }
 
 EnemyBase::~EnemyBase()
 {
+
+	MV1DeleteModel(m_damageSE);
+
+	DeleteEffekseerEffect(m_bloodHandle);
 }
 
 void EnemyBase::Init()
 {
+	
 }
 
 void EnemyBase::Draw()
@@ -37,11 +51,6 @@ void EnemyBase::Draw()
 
 	// ３Ｄモデルの描画
 	MV1DrawModel(m_handle);
-}
-
-
-void EnemyBase::OnDamage()
-{
 }
 
 void EnemyBase::End()

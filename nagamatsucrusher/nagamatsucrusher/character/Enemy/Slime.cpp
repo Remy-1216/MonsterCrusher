@@ -1,6 +1,7 @@
 #include "Slime.h"
 #include "Knight.h"
 #include <math.h>
+#include "EffekseerForDXLib.h"
 
 namespace
 {
@@ -14,11 +15,11 @@ namespace
 	//敵の最大HP
 	constexpr int kMaxHp = 50;
 
+	//ダメージ数
+	constexpr int kDamageNum = 10;
+
 	//アニメーション
 	constexpr int kRunAnimIndex = 6;
-	constexpr int kAttackAnimIndex = 0;
-	constexpr int kDamageAnimIndex = 4;
-	constexpr int kDeathAnimIndex = 3;
 
 	//発生位置
 	constexpr int kAppearanceX = 750;
@@ -40,10 +41,16 @@ namespace
 	constexpr float kPlayerPos2X = 265.0f;
 	
 	constexpr float kPlayerPos3X = 6175.0f;
+
+	constexpr float kPlayerPos4X = 12000.0f;
+
 	//ノックバック
 	constexpr float kKnockback = 50.0f;
 
 	constexpr float kMaxKnockback = 250.0f;
+
+	//無敵時間
+	constexpr int  kInvincibleTime = 20;
 }
 
 Slime::Slime(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1)
@@ -53,6 +60,12 @@ Slime::Slime(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRat
 
 	//HPの初期化
 	m_hp = kMaxHp;
+
+	//無敵時間の設定
+	m_invincibleTime = kInvincibleTime;
+
+	//初期化
+	m_isHitAttack = false;
 
 	//座標の設定
 	SetPosX(playerPos);
@@ -64,27 +77,43 @@ Slime::~Slime()
 
 void Slime::Update(Knight* knight, VECTOR playerPos)
 {
-	Animation();
-	ComingPlayer(knight);
+	if (!m_isHitAttack)
+	{
+		//アニメーション
+		Animation();
+
+		//プレイヤーに近づく
+		ComingPlayer(knight);
+	}
+
+	//無敵時間
+	InvincibleTime();
+
 
 	m_enemyCollision.SetCenter(m_pos.x- kAdj, m_pos.y, m_pos.z - kAdj, kModelWidth, kModelHeight,kModelDepth);
 }
 
 void Slime::SetPosX(VECTOR playerPos)
 {
-	if (playerPos.x <= kPlayerPos1X)
+	if (playerPos.x < kPlayerPos1X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
 		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
 	}
-	else if (playerPos.x <= kPlayerPos2X)
+	else if (playerPos.x < kPlayerPos2X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
 		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
 	}
-	else if (playerPos.x <= kPlayerPos3X)
+	else if (playerPos.x < kPlayerPos3X)
+	{
+		m_randomPosX = GetRand(kAppearanceX);
+		m_randomPosX = m_randomPosX + playerPos.x;
+		m_pos = VGet(m_randomPosX, kPosY, 0.0f);
+	}
+	else if (playerPos.x < kPlayerPos4X)
 	{
 		m_randomPosX = GetRand(kAppearanceX);
 		m_randomPosX = m_randomPosX + playerPos.x;
@@ -123,6 +152,24 @@ void Slime::ComingPlayer(Knight* knight)
 	MV1SetPosition(m_handle, m_pos);
 }
 
+void Slime::InvincibleTime()
+{
+	if (!m_isHitAttack)
+	{
+		m_invincibleTime = kInvincibleTime;
+	}
+	if (m_isHitAttack)
+	{
+		m_invincibleTime--;
+	}
+
+	if (m_invincibleTime <= 0)
+	{
+		m_invincibleTime = kInvincibleTime;
+		m_isHitAttack = false;
+	}
+}
+
 void Slime::Animation()
 {
 	if (m_prevAnimNo != -1)
@@ -141,26 +188,10 @@ void Slime::Animation()
 	{
 		if (isLoop)
 		{
-			(kRunAnimIndex);
+			ChangeAnim(kRunAnimIndex);
 		}
-		
-		
-	}
-	if (m_state == kAttack)
-	{
-
-	}
-	if (m_state == kDamage)
-	{
-
-	}
-	if (m_state == kDeath)
-	{
-
 	}
 }
-
-
 bool Slime::UpdateAnim(int attachNo)
 {
 	//アニメーションが設定されていないので終了
@@ -187,8 +218,6 @@ bool Slime::UpdateAnim(int attachNo)
 	return isLoop;
 }
 
-
-
 void Slime::ChangeAnim(int animIndex)
 {
 	//さらに古いアニメーションがアタッチされている場合はこの時点で削除しておく
@@ -214,16 +243,19 @@ void Slime::ChangeAnim(int animIndex)
 
 void Slime::HitAttack(Rect playerAttack)
 {
-	if (m_enemyCollision.IsCollsion(playerAttack))
+	if (m_enemyCollision.IsCollsion(playerAttack) && !m_isHitAttack)
 	{
-		m_hp -= 5;
-		m_pos.x += kKnockback;
-		m_attackHits++;
+
+		PlaySoundMem(m_damageSE, DX_PLAYTYPE_BACK);
+
+		m_hp -= kDamageNum;
+
+
+		m_isHitAttack = true;
 	}
-	if (m_attackHits == 3)
+	else
 	{
-		m_pos.x += kMaxKnockback;
-		m_attackHits = 0;
+		m_state = kMove;
 	}
 }
 

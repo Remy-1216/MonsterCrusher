@@ -14,35 +14,47 @@ public:
 	virtual void Draw();
 	virtual void End();
 
-
 private:
 
 	//アニメーション関連
-	void  Animation();
+	void Animation();
 
-	//アニメーションの進行
-	//ループしたかどうかを返す
-	bool UpdateAnim(int attachNo);
-
-	//アニメーションの変更
-	void ChangeAnim(int animIndex);
 private:
-	enum state
-	{
-		kWait,			//待機中
-	};
-private:
-
-	//アニメーション情報
-	int m_currentAnimNo;	//現在のアニメーション
-	int m_prevAnimNo;		//変更前のアニメーション
-	float m_animBlendRate;	//アニメーション合成割合
-
-	//状態
-	int m_state;
-
 	//ハンドル
 	int m_handle;
+
+	//ハチのハンドル
+	int m_beeHandle;
+
+	//スライムのハンドル
+	int m_slimeHandle;
+
+	//アタッチしたアニメーションの再生時間を保存する
+	int m_totalTime;
+
+	//アタッチしたハチのアニメーションの再生時間を保持する
+	int m_beeTotalTime;
+
+	//アタッチしたスライムのアニメーションの再生時間を保持する
+	int m_slimeTotalTime;
+
+	//ナイトのアニメーションナンバー
+	int m_attachIndex;
+
+	//ハチのアニメーションナンバー
+	int m_beeAttachIndex;
+
+	//スライムアニメーションナンバー
+	int m_slimeAttachIndex;
+
+	//ナイトの再生時間
+	float m_playTime;
+
+	//ハチの再生時間
+	float m_beePlayTime;
+
+	//スライムの再生時間
+	float m_slimePlayTime;
 
 	//フェードイン、アウト
 	int m_fadeAlpha;
@@ -61,5 +73,15 @@ private:
 
 	//モデルの座標
 	VECTOR m_pos;
+	
+	//ハチの座標
+	VECTOR m_beePos;
+
+	//スライムの座標
+	VECTOR m_slimePos;
+
+	//カメラの座標
+	VECTOR m_cameraPos;
+	VECTOR m_cameraTarget;
 };
 

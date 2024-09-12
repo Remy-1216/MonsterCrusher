@@ -18,8 +18,11 @@ public:
 	//描画
 	void Draw();	
 
-	//クリアしたかを渡す
+	//ステージクリアしたかを渡す
 	bool GetStageClear() const noexcept { return m_isStageClear; }
+
+	//クリアしたかどうかを与える
+	bool GetClear() const noexcept { return m_isClear; }
 private:
 
 	//敵の生成
@@ -67,6 +70,9 @@ private:
 	//スライムのモデル
 	int m_slimeHandle;
 
+	//ダメージ受けた時のSE
+	int m_damageSE;
+
 	//どちらの敵を生成するか
 	int m_randomEnemy;
 
@@ -102,6 +108,10 @@ private:
 
 	//ステージ4をクリアした
 	bool m_isClear4;
+
+
+	//全クリアしたかどうか
+	bool m_isClear;
 
 	//プレイヤーの座標保持
 	VECTOR m_playerPos;
