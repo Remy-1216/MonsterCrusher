@@ -89,7 +89,6 @@ void Slime::Update(Knight* knight, VECTOR playerPos)
 	//–³“GŽžŠÔ
 	InvincibleTime();
 
-
 	m_enemyCollision.SetCenter(m_pos.x- kAdj, m_pos.y, m_pos.z - kAdj, kModelWidth, kModelHeight,kModelDepth);
 }
 
@@ -154,10 +153,6 @@ void Slime::ComingPlayer(Knight* knight)
 
 void Slime::InvincibleTime()
 {
-	if (!m_isHitAttack)
-	{
-		m_invincibleTime = kInvincibleTime;
-	}
 	if (m_isHitAttack)
 	{
 		m_invincibleTime--;

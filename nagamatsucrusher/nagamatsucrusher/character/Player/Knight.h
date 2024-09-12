@@ -169,7 +169,7 @@ private:
 	//移動量
 	VECTOR m_move;
 
-	//
+	//カメラの回転を方向に変換した値を保存する
 	VECTOR m_movementDirection;
 
 	//カメラの前方ベクトル

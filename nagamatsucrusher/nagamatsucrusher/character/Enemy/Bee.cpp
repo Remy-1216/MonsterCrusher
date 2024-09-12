@@ -200,10 +200,6 @@ void Bee::Attack()
 
 void Bee::InvincibleTime()
 {
-	if (!m_isHitAttack)
-	{
-		m_invincibleTime = kInvincibleTime;
-	}
 	if (m_isHitAttack)
 	{
 		m_invincibleTime--;
