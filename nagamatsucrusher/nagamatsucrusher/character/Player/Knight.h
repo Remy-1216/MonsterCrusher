@@ -65,6 +65,8 @@ private:
 	//–³“G
 	void InvincibleTime();
 
+	//‚Ì‚¯”½‚è
+	void LeaningBack();
 
 private:
 

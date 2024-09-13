@@ -580,6 +580,27 @@ void Knight::InvincibleTime()
 	}
 }
 
+void Knight::LeaningBack()
+{
+	if (m_direction == kRight)
+	{
+		m_pos.z += m_knockBack;
+	}
+	if (m_direction == kBehind)
+	{
+		m_pos.x += m_knockBack;
+	}
+	if (m_direction == kBefore)
+	{
+		m_pos.x -= m_knockBack;
+	}
+	if (m_direction == kLeft)
+	{
+		m_pos.z -= m_knockBack;
+	}
+
+}
+
 //敵と当たった時の処理
 void Knight::HitBody()
 {	
@@ -596,23 +617,7 @@ void Knight::HitBody()
 		// エフェクトを再生する。
 		m_playingEffectHandle = PlayEffekseer3DEffect(m_bloodHandle);
 
-		if (m_direction == kRight)
-		{
-			m_pos.z += m_knockBack;
-		}
-		if (m_direction == kBehind)
-		{
-			m_pos.x += m_knockBack;
-		}
-		if (m_direction == kBefore)
-		{
-			m_pos.x -= m_knockBack;
-		}
-		if (m_direction == kLeft)
-		{
-			m_pos.z -= m_knockBack;
-		}
-
+		
 		// 再生中のエフェクトを移動する。
 		SetPosPlayingEffekseer3DEffect(m_playingEffectHandle, m_pos.x, m_pos.y + 100, m_pos.z);
 

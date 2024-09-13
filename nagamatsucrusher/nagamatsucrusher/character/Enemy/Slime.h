@@ -44,6 +44,8 @@ private:
 	void ChangeAnim(int animIndex);
 
 	
+
+	
 private:
 	//アニメーション情報
 	int m_currentAnimNo;	//現在のアニメーション
