@@ -8,6 +8,11 @@
 
 namespace 
 {
+	//当たり判定の大きさ
+	//半径
+	constexpr float kCapsuleRadius = 400.0f;
+
+
 	//アニメーション	
 	constexpr int kWaitAnimIndex = 1;			//待機中
 	constexpr int kRunAnimIndex = 2;			//走る
@@ -21,6 +26,9 @@ namespace
 	//アニメーションの切り替えにかかるフレーム数
 	constexpr float kAnimChangeFrame =4.0f;
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;
+
+	//アニメーションの速度
+	constexpr float kAnimSpeed = 0.75f;
 
 	//ダメージ量
 	constexpr int kDamage = 5;
@@ -76,11 +84,8 @@ namespace
 
 	//プレイヤーの場所によってエネミーを生成する
 	constexpr float kStage1playerPosX = -4500.0f;
-
 	constexpr float kStage2playerPosX = 265.0f;
-
 	constexpr float kStage3playerPosX = 6175.0f;
-
 	constexpr float kStage4playerPosX = 12000.0f;
 
 	//HP
@@ -280,7 +285,6 @@ void Knight::StageProcess()
 //どっち向いているのか
 void Knight::DirectionFacing()
 {
-
 	int rotationDegrees = 0.0f;
 
 	rotationDegrees = m_playerAngle * kAngle;
@@ -490,7 +494,7 @@ bool Knight::UpdateAnim(int attachNo)
 	float now = MV1GetAttachAnimTime(m_handle, attachNo);
 
 	//アニメーション進める
-	now += 0.5f;
+	now += kAnimSpeed;
 
 	//現在再生中のアニメーションの総カウントを取得する
 	float total = MV1GetAttachAnimTotalTime(m_handle, attachNo);
