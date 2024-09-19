@@ -8,7 +8,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// 一部の関数はDxLib_Init()の前に実行する必要がある
-	ChangeWindowMode(false);
+	ChangeWindowMode(true);
 
 	//アイコンファイルの読み込み
 	//SetWindowIconID(IDI_ICON1);

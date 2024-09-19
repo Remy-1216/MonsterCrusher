@@ -17,7 +17,7 @@ namespace
 {
 	//操作説明の位置
 	constexpr int kOperationX = 1750;
-	constexpr int kOperationY = 50;
+	constexpr int kOperationY = 150;
 
 	//フェードイン、フェードアウトの数値
 	constexpr int kFadeValue = 255;

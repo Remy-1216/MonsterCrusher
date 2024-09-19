@@ -340,19 +340,19 @@ void EnemyManager::DrawEnemys()
 	// HP の値を文字列とバーで表示
 	if (!m_isClear1)
 	{
-		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention1);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, 0x758492, "残り敵数 : %d", m_enemyNumRetention1);
 	}
 	else if (!m_isClear2)
 	{
-		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention2);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, 0x758492, "残り敵数 : %d", m_enemyNumRetention2);
 	}
 	else if (!m_isClear3)
 	{
-		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention3);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, 0x758492, "残り敵数 : %d", m_enemyNumRetention3);
 	}
 	else if (!m_isClear4)
 	{
-		DrawFormatString(kRestEnemysX, kRestEnemysY, GetColor(255, 255, 255), "残り敵数 : %d", m_enemyNumRetention4);
+		DrawFormatString(kRestEnemysX, kRestEnemysY, 0x758492, "残り敵数 : %d", m_enemyNumRetention4);
 	}
 	
 }

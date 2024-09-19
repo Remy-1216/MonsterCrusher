@@ -119,7 +119,7 @@ private:
 	int m_state;
 
 	//ノックバック
-	int m_knockBack;
+	int m_leaningBack;
 
 	//向いている方向
 	int m_direction;

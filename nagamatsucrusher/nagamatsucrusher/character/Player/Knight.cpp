@@ -72,14 +72,24 @@ namespace
 	//モデルのサイズ変更
 	constexpr float kExpansion = 100.0f;
 
+	//向いている方向
+	constexpr int kRightRota = 30;
+	
+	constexpr int kLeftRota = 130;
+
+	constexpr int kBeforeRota = 60;
+
+
 	//重力の初期値
 	constexpr float kGravity = 0.18f;
 
 	//ジャンプしたときにかかる重力
 	constexpr float kGravityPlus = 0.25f;
 
-	//ノックバック
-	constexpr float kKnockback = 100.0f;
+	//のけ反り
+	constexpr float kMaxLeaningBack = 100.0f;
+
+	constexpr float kLeaningBack = 20.0f;
 
 
 	//プレイヤーの場所によってエネミーを生成する
@@ -97,13 +107,16 @@ namespace
 	//無敵時間
 	constexpr int  kInvincibleTime = 180;
 
+	//ボタンカウントのリセット時間
+	constexpr int kResetCount = 180;
+
 	//回復量
 	constexpr int kRecovery = 20;
 }
 
 Knight::Knight() :m_state(kWait), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1), m_count(0)
 , m_lightPos(VGet(0.0f, 0.0f, 0.0f)),m_killSE(-1),m_damageSE(-1),m_isRun(false),m_pos(VGet(0.0f,0.0f,0.0f))
-, m_move(VGet(0.0f, 0.0f, 0.0f)), m_playerAngle(0), m_movementDirection(VGet(0.0f,0.0f,0.0f)),m_knockBack(0)
+, m_move(VGet(0.0f, 0.0f, 0.0f)), m_playerAngle(0), m_movementDirection(VGet(0.0f,0.0f,0.0f))
 ,m_bloodHandle(-1)
 {
 	
@@ -159,7 +172,7 @@ void Knight::Init()
 	m_hp = kHpMax;
 
 	//ノックバックの値
-	m_knockBack = 0;
+	m_leaningBack = 0;
 
 	//無敵時間の初期化
 	m_invincibleTime = kInvincibleTime;
@@ -226,7 +239,6 @@ void Knight::Draw()
 
 	m_attackCollision.Draw(0x000000, true);
 
-	DrawFormatString(0, 100, 0xffffff, "%d", m_isRun);
 #endif
 }
 
@@ -280,6 +292,8 @@ void Knight::StageProcess()
 	{
 		m_pos.x = kMaxX;
 	}
+
+
 }
 
 //どっち向いているのか
@@ -289,22 +303,34 @@ void Knight::DirectionFacing()
 
 	rotationDegrees = m_playerAngle * kAngle;
 
-	if (rotationDegrees > -30 && rotationDegrees < 30)
+	if (rotationDegrees > -kRightRota && rotationDegrees < kRightRota)
 	{
 		m_direction = kRight;
+	}
+	else if (rotationDegrees < -60 && rotationDegrees > -30 )
+	{
+		m_direction = kDiagonallyRightFront;
+	}
+	else if (rotationDegrees < -60 && rotationDegrees > -120)
+	{
+		m_direction = kBefore;
 	}
 	else if (rotationDegrees < 130 && rotationDegrees > 70)
 	{
 		m_direction = kBehind;
 	}
-	else if (rotationDegrees < -60 && rotationDegrees > -120)
-	{
-		m_direction  = kBefore;
-	}
-	else if (rotationDegrees > 135 || rotationDegrees < -130)
+
+	else if (rotationDegrees > 135 || rotationDegrees < -kLeftRota)
 	{
 		m_direction = kLeft;
 	}
+
+#ifdef _DEBUG
+
+
+	DrawFormatString(0, 100, 0xffffff, "%d", rotationDegrees);
+
+#endif
 }
 
 //ボタンを押した回数を一定時間で初期化する
@@ -312,7 +338,7 @@ void Knight::ButtonCountProcess()
 {
 	//ボタンのカウントを一定時間で初期化する
 	m_count++;
-	if (m_count >= 180)
+	if (m_count >= kResetCount)
 	{
 		m_attackCollision.SetCenter(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 		m_countXButton = 0;
@@ -584,23 +610,35 @@ void Knight::InvincibleTime()
 	}
 }
 
+
+//のけ反り
 void Knight::LeaningBack()
 {
+	//のけ反り
+	m_leaningBack += kLeaningBack;
+
+	//方向によって押される方向が変わる
 	if (m_direction == kRight)
 	{
-		m_pos.z += m_knockBack;
+		m_pos.z += m_leaningBack;
 	}
 	if (m_direction == kBehind)
 	{
-		m_pos.x += m_knockBack;
+		m_pos.x += m_leaningBack;
 	}
 	if (m_direction == kBefore)
 	{
-		m_pos.x -= m_knockBack;
+		m_pos.x -= m_leaningBack;
 	}
 	if (m_direction == kLeft)
 	{
-		m_pos.z -= m_knockBack;
+		m_pos.z -= m_leaningBack;
+	}
+	
+
+	if (m_leaningBack <= kMaxLeaningBack)
+	{
+		m_leaningBack = 0;
 	}
 
 }
@@ -608,6 +646,8 @@ void Knight::LeaningBack()
 //敵と当たった時の処理
 void Knight::HitBody()
 {	
+	LeaningBack();
+
 	if (!m_isHit)
 	{
 		m_isHit = true;
@@ -616,20 +656,11 @@ void Knight::HitBody()
 
 		PlaySoundMem(m_damageSE, DX_PLAYTYPE_BACK);
 
-		m_knockBack++;
-
 		// エフェクトを再生する。
 		m_playingEffectHandle = PlayEffekseer3DEffect(m_bloodHandle);
 
-		
 		// 再生中のエフェクトを移動する。
 		SetPosPlayingEffekseer3DEffect(m_playingEffectHandle, m_pos.x, m_pos.y + 100, m_pos.z);
-
-		if (m_knockBack <= kKnockback)
-		{
-			m_knockBack = 0;
-		}
-
 	}
 }
 
