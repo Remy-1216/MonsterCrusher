@@ -328,7 +328,7 @@ void Knight::DirectionFacing()
 #ifdef _DEBUG
 
 
-	DrawFormatString(0, 100, 0xffffff, "%d", rotationDegrees);
+	DrawFormatString(0, 100, 0xffffff, "%4d", rotationDegrees);
 
 #endif
 }

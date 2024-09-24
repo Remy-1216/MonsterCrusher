@@ -31,6 +31,20 @@ protected:
 		kDamage,		//ダメージ受けている
 		kDeath			//死んだ
 	};
+
+	//エネミーがどちらを向いているか
+	enum direction
+	{
+		kRight,					//右
+		kLeft,					//左
+		kBefore,				//前
+		kBehind,				//後ろ
+		kDiagonallyRightFront,	//右斜め前
+		kDiagonallyLeftFront,	//左斜め前
+		kRightDiagonalBack,		//右斜め後ろ
+		kLeftDiagonalBack		//左斜め後ろ
+
+	};
 protected:
 
 	//状態
