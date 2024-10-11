@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "EnemyBase.h"
 #include "Rect.h"
 class Knight;
@@ -10,71 +10,74 @@ public:
 
 	void Update(Knight* knight,VECTOR playerPos) override;
 
-	//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚É‚æ‚Á‚Ä¶¬‚·‚éˆÊ’u‚ğ•Ï‚¦‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã«ã‚ˆã£ã¦ç”Ÿæˆã™ã‚‹ä½ç½®ã‚’å¤‰ãˆã‚‹
 	void SetPosX(VECTOR playerPos)override;
 
-	//UŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
+	//æ”»æ’ƒãŒå½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void HitAttack(Knight* knight);
 
-	//ƒvƒŒƒCƒ„[‚É‚ ‚½‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚ãŸã‚‹
 	void HitPlayer(Knight* knight, Rect playerCollision);
 	
-	//ƒnƒ`‚Ì‘Ì—Í‚ğ—^‚¦‚é
+	//ãƒãƒã®ä½“åŠ›ã‚’ä¸ãˆã‚‹
 	int GetBeeHp() const noexcept { return m_hp; }
 
-	//ƒnƒ`‚Ì“–‚½‚è”»’è‚ğ—^‚¦‚é
+	//ãƒãƒã®å½“ãŸã‚Šåˆ¤å®šã‚’ä¸ãˆã‚‹
 	Rect GetBeeCollision() const noexcept { return m_enemyCollision; }
 
-	//“–‚½‚Á‚½‚©‚Ç‚¤‚©‚ğ—^‚¦‚é
+	//å½“ãŸã£ãŸã‹ã©ã†ã‹ã‚’ä¸ãˆã‚‹
 	bool GetHitPlayer() const noexcept { return m_isHitPlayer; }
 
 private:
-	//ƒvƒŒƒCƒ„[‚É­‚µ‚Ã‚Â‹ß‚Ã‚­
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å°‘ã—ã¥ã¤è¿‘ã¥ã
 	void ComingPlayer(Knight* knight);
 
-	//ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚¢‚½‚çUŒ‚
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ã„ãŸã‚‰æ”»æ’ƒ
 	void Attack();
 
-	//‚Ç‚Á‚¿Œü‚¢‚Ä‚¢‚é‚Ì‚©
+	//ã©ã£ã¡å‘ã„ã¦ã„ã‚‹ã®ã‹
 	void DirectionFacing();
 
-	//–³“G
+	//ç„¡æ•µ
 	void InvincibleTime();
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖ˜A
+	//HPãƒãƒ¼ã®è¡¨ç¤º
+	void DrawHpBar();
+
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
 	void  Animation();
 
-	//ƒ‹[ƒv‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·
+	//ãƒ«ãƒ¼ãƒ—ã—ãŸã‹ã©ã†ã‹ã‚’è¿”ã™
 	bool UpdateAnim(int attachNo);
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì•ÏX
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å¤‰æ›´
 	void ChangeAnim(int animIndex);
 
 
 private:
-	MV1_COLL_RESULT_POLY* m_pPlayerNum[1];	// ƒvƒŒƒCƒ„[‚Æ”»’f‚³‚ê‚½ƒ|ƒŠƒSƒ“‚Ì\‘¢‘Ì‚ÌƒAƒhƒŒƒX‚ğ•Û‘¶‚µ‚Ä‚¨‚­‚½‚ß‚Ìƒ|ƒCƒ“ƒ^”z—ñ
+	MV1_COLL_RESULT_POLY* m_pPlayerNum[1];	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨åˆ¤æ–­ã•ã‚ŒãŸãƒãƒªã‚´ãƒ³ã®æ§‹é€ ä½“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä¿å­˜ã—ã¦ãŠããŸã‚ã®ãƒã‚¤ãƒ³ã‚¿é…åˆ—
 private:
-	//ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
-	int m_currentAnimNo;	//Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	int m_prevAnimNo;		//•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	float m_animBlendRate;	//ƒAƒjƒ[ƒVƒ‡ƒ“‡¬Š„‡
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+	int m_currentAnimNo;	//ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	int m_prevAnimNo;		//å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	float m_animBlendRate;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆæˆå‰²åˆ
 
-	//ƒvƒŒƒCƒ„[‚Ìl”
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®äººæ•°
 	int m_playerNum;
 
-	//ƒ‰ƒ“ƒ_ƒ€‚ÈˆÊ’u
+	//ãƒ©ãƒ³ãƒ€ãƒ ãªä½ç½®
 	float m_randomPosX;
 
-	//UŒ‚‚µ‚Ä‚¢‚é‚©‚ğ•Û‚·‚é
+	//æ”»æ’ƒã—ã¦ã„ã‚‹ã‹ã‚’ä¿æŒã™ã‚‹
 	bool m_isAttacking;
 
-	//UŒ‚‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	//æ”»æ’ƒã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
 	bool m_isAttack;
 
-	//•`‰æ‚³‚ê‚é–I‚ÌÀ•W
+	//æç”»ã•ã‚Œã‚‹èœ‚ã®åº§æ¨™
 	VECTOR m_beePos;
 
-	//i‚Ş‹——£
+	//é€²ã‚€è·é›¢
 	VECTOR m_distance;
 
 };

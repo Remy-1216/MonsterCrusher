@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "Rect.h"
 class Knight;
@@ -12,41 +12,41 @@ public:
 	
 	virtual void Update(Knight* knight, VECTOR playerPos) abstract;
 	
-	void Draw();	//ƒ‹[ƒv‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·
+	void Draw();	//ãƒ«ãƒ¼ãƒ—ã—ãŸã‹ã©ã†ã‹ã‚’è¿”ã™
 
-	//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚É‚æ‚Á‚Ä¶¬‚·‚éˆÊ’u‚ğ•Ï‚¦‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã«ã‚ˆã£ã¦ç”Ÿæˆã™ã‚‹ä½ç½®ã‚’å¤‰ãˆã‚‹
 	virtual void SetPosX(VECTOR playerPos)abstract;
 
-	//UŒ‚‚ğó‚¯‚½•ûŒü‚É‚æ‚Á‚ÄƒmƒbƒNƒoƒbƒN‚·‚é
+	//æ”»æ’ƒã‚’å—ã‘ãŸæ–¹å‘ã«ã‚ˆã£ã¦ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã™ã‚‹
 	void Knockback(int direction);
 
 	void End();
 
-	//À•W‚Ìİ’è
+	//åº§æ¨™ã®è¨­å®š
 	void SetPos(VECTOR mpos) { m_pos = mpos; }
 protected:
 
-	//ƒGƒlƒ~[‚Ìó‘Ô
+	//ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹
 	enum  state
 	{
-		kMove,			//“®‚¢‚Ä‚¢‚é
-		kAttack,		//UŒ‚’†
-		kDamage,		//ƒ_ƒ[ƒWó‚¯‚Ä‚¢‚é
-		kDeath			//€‚ñ‚¾
+		kMove,			//å‹•ã„ã¦ã„ã‚‹
+		kAttack,		//æ”»æ’ƒä¸­
+		kDamage,		//ãƒ€ãƒ¡ãƒ¼ã‚¸å—ã‘ã¦ã„ã‚‹
+		kDeath			//æ­»ã‚“ã 
 	};
 
-	//ƒGƒlƒ~[‚ª‚Ç‚¿‚ç‚ğŒü‚¢‚Ä‚¢‚é‚©
+	//ã‚¨ãƒãƒŸãƒ¼ãŒã©ã¡ã‚‰ã‚’å‘ã„ã¦ã„ã‚‹ã‹
 	enum direction
 	{
-		kRight,					//‰E
-		kLeft,					//¶
-		kBefore,				//‘O
-		kBehind,				//Œã‚ë
+		kRight,					//å³
+		kLeft,					//å·¦
+		kBefore,				//å‰
+		kBehind,				//å¾Œã‚
 
 	};
 protected:
 
-	//ó‘Ô
+	//çŠ¶æ…‹
 	int m_state;
 
 	int	m_animFrame;
@@ -54,52 +54,69 @@ protected:
 	//HP
 	int m_hp;
 
-	//UŒ‚—Í
+	//æœ€å¤§HP
+	int m_maxHp;
+
+	//æ”»æ’ƒåŠ›
 	int m_attackPower;
 
-	//ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹
+	//ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«
 	int m_handle;
 
-	//UŒ‚‚ğó‚¯‚½‚ÌSE
+	//HPã®ãƒãƒ³ãƒ‰ãƒ«
+	int m_hpHandle;
+	int m_maxHpHandle;
+
+	//HPãƒãƒ¼ã®ã‚µã‚¤ã‚º
+	int m_graphSizeX;
+	int m_graphSizeY;
+
+	//ã©ã‚Œã ã‘ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’é£Ÿã‚‰ã£ãŸã‹
+	int m_decreaseHp;
+
+	//æ”»æ’ƒã‚’å—ã‘ãŸæ™‚ã®SE
 	int m_damageSE;
 
-	//oŒŒƒGƒtƒFƒNƒg‚Ìƒnƒ“ƒhƒ‹
+	//å‡ºè¡€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«
 	int m_bloodHandle;
 
-	//ƒGƒtƒFƒNƒg‚ÌÄ¶ŠÔ
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿæ™‚é–“
 	int m_timer;
 
-	//Ä¶’†‚ÌƒGƒtƒFƒNƒgƒnƒ“ƒhƒ‹
+	//å†ç”Ÿä¸­ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒãƒ³ãƒ‰ãƒ«
 	int m_playingEffectHandle;
 
-	//Œü‚¢‚Ä‚¢‚é•ûŒü
+	//å‘ã„ã¦ã„ã‚‹æ–¹å‘
 	int m_direction;
 
-	//ƒvƒŒƒCƒ„[‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ã„ã¦ã„ã‚‹æ–¹å‘
 	int m_playerDirection;
 
-	//ƒmƒbƒNƒoƒbƒN
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 	int m_knockback;
 
-	//–³“GŠÔ
+	//ç„¡æ•µæ™‚é–“
 	int m_invincibleTime;
 
-	//ƒGƒlƒ~[‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü
+	//ã‚¨ãƒãƒŸãƒ¼ã®å‘ã„ã¦ã„ã‚‹æ–¹å‘
 	float m_enemyAngle;
 
-	//UŒ‚‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
+	//HP1ã«å¯¾ã—ã¦ã®ç”»åƒã®å¤§ãã•
+	float m_hp1Lenght;
+
+	//æ”»æ’ƒã«å½“ãŸã£ãŸã‹ã©ã†ã‹
 	bool m_isHitAttack;
 
-	//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å½“ãŸã£ãŸã‹ã©ã†ã‹
 	bool m_isHitPlayer;
 
-	//À•W
+	//åº§æ¨™
 	VECTOR	 m_pos;
 
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	Rect m_enemyCollision;
 
-	//ƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å½“ãŸã‚Šåˆ¤å®š
 	Rect m_playerAttackCollision;
 
 };

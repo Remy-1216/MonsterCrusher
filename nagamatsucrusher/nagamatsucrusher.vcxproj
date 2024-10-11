@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{52089b00-443a-4126-92e2-146d39c3e64b}</ProjectGuid>
+    <RootNamespace>nagamatsucrusher</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)/Scene;$(ProjectDir)/util;$(ProjectDir)/character/Enemy;$(ProjectDir)/camera;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)/camera;$(ProjectDir)/character/Enemy;$(ProjectDir)/util;$(ProjectDir)/Scene;$(ProjectDir)/character/Player;$(ProjectDir)/stage;C:\Users\fko2347035\Desktop\永松 涼華\プロジェクトに追加すべきファイル_VC用;C:\Users\永松涼華\Documents\GitHub\Personal-production\プロジェクトに追加すべきファイル_VC用;C:\Users\suzuk\OneDrive\デスクトップ\Personal-production\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="camera\Camera.cpp" />
+    <ClCompile Include="character\Enemy\Bee.cpp" />
+    <ClCompile Include="character\Enemy\Boss.cpp" />
+    <ClCompile Include="character\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="character\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="character\Enemy\Slime.cpp" />
+    <ClCompile Include="character\Player\Knight.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene\SceneBase.cpp" />
+    <ClCompile Include="scene\SceneClear.cpp" />
+    <ClCompile Include="scene\SceneGame.cpp" />
+    <ClCompile Include="scene\SceneManager.cpp" />
+    <ClCompile Include="scene\SceneResult.cpp" />
+    <ClCompile Include="scene\SceneTitle.cpp" />
+    <ClCompile Include="stage\Stage1.cpp" />
+    <ClCompile Include="stage\StageBase.cpp" />
+    <ClCompile Include="stage\StageManager.cpp" />
+    <ClCompile Include="util\LoadData.cpp" />
+    <ClCompile Include="util\Pad.cpp" />
+    <ClCompile Include="util\Rect.cpp" />
+    <ClCompile Include="util\Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera\Camera.h" />
+    <ClInclude Include="character\Enemy\Bee.h" />
+    <ClInclude Include="character\Enemy\Boss.h" />
+    <ClInclude Include="character\Enemy\EnemyBase.h" />
+    <ClInclude Include="character\Enemy\EnemyManager.h" />
+    <ClInclude Include="character\Enemy\Slime.h" />
+    <ClInclude Include="character\Player\Knight.h" />
+    <ClInclude Include="scene\SceneBase.h" />
+    <ClInclude Include="scene\SceneClear.h" />
+    <ClInclude Include="scene\SceneGame.h" />
+    <ClInclude Include="scene\SceneManager.h" />
+    <ClInclude Include="scene\SceneResult.h" />
+    <ClInclude Include="scene\SceneTitle.h" />
+    <ClInclude Include="stage\Stage1.h" />
+    <ClInclude Include="stage\StageBase.h" />
+    <ClInclude Include="stage\StageManager.h" />
+    <ClInclude Include="util\Game.h" />
+    <ClInclude Include="util\LoadData.h" />
+    <ClInclude Include="util\Pad.h" />
+    <ClInclude Include="util\Rect.h" />
+    <ClInclude Include="util\resource.h" />
+    <ClInclude Include="util\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nagamatsucrusher.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\icon\icon.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,18 +1,18 @@
-#include "DxLib.h"
+ï»¿#include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "EnemyBase.h"
 
 namespace
 {
-	//ƒ‚ƒfƒ‹‚ÌƒTƒCƒY‚Ì‘å‚«‚³‚Ì’²®
+	//ãƒ¢ãƒ‡ãƒ«ã®ã‚µã‚¤ã‚ºã®å¤§ãã•ã®èª¿æ•´
 	constexpr float kExpansion = 0.75f;
 
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚¦‚É‚©‚©‚éƒtƒŒ[ƒ€”
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆã«ã‹ã‹ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 	constexpr float kAnimChangeFrame = 8.0f;
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;
 
-	//ƒmƒbƒNƒoƒbƒN
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 	constexpr int kKnockback = 1;
 
 	constexpr int kMaxKnockback =15;
@@ -21,23 +21,27 @@ namespace
 
 EnemyBase::EnemyBase(int ModelHandle)
 {
-	//ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
+	//ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 	m_handle = ModelHandle;
 
-	//ƒ_ƒ[ƒW‚ª“ü‚Á‚½‚ÌSE‚Ìƒ[ƒh
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ãŒå…¥ã£ãŸæ™‚ã®SEã®ãƒ­ãƒ¼ãƒ‰
 	m_damageSE = LoadSoundMem("data/SE/Cut.mp3");
 
-	//Å‰‚Ìó‘Ô‚Í“®‚¢‚Ä‚¢‚é
+	//æœ€åˆã®çŠ¶æ…‹ã¯å‹•ã„ã¦ã„ã‚‹
 	m_state = kMove;
 
-	//ƒ‚ƒfƒ‹‚Ì‘å‚«‚³‚ğ•ÏX
+	//ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•ã‚’å¤‰æ›´
 	MV1SetScale(m_handle, VGet(kExpansion, kExpansion, kExpansion));
+
 }
 
 EnemyBase::~EnemyBase()
 {
-
 	MV1DeleteModel(m_damageSE);
+
+	DeleteGraph(m_hpHandle);
+
+	DeleteGraph(m_maxHpHandle);
 
 	DeleteEffekseerEffect(m_bloodHandle);
 }
@@ -52,18 +56,19 @@ void EnemyBase::Draw()
 #if _DEBUG
 	m_enemyCollision.Draw(0x000000,true);
 #endif
-	//ƒ|ƒWƒVƒ‡ƒ“‚Ìİ’è
+
+	//ãƒã‚¸ã‚·ãƒ§ãƒ³ã®è¨­å®š
 	MV1SetPosition(m_handle, m_pos);
 
-	// ‚R‚cƒ‚ƒfƒ‹‚Ì•`‰æ
+	// ï¼“ï¼¤ãƒ¢ãƒ‡ãƒ«ã®æç”»
 	MV1DrawModel(m_handle);
 }
 
 void EnemyBase::Knockback(int direction)
 {
-	//UŒ‚‚ğó‚¯‚Ä‚©‚ç‚Ç‚ê‚¾‚¯ˆÚ“®‚·‚é‚©
+	//æ”»æ’ƒã‚’å—ã‘ã¦ã‹ã‚‰ã©ã‚Œã ã‘ç§»å‹•ã™ã‚‹ã‹
 	m_knockback += kKnockback;
-	//•ûŒü‚É‚æ‚Á‚Ä‰Ÿ‚³‚ê‚é•ûŒü‚ª•Ï‚í‚é
+	//æ–¹å‘ã«ã‚ˆã£ã¦æŠ¼ã•ã‚Œã‚‹æ–¹å‘ãŒå¤‰ã‚ã‚‹
 	if (direction == kRight)
 	{
 		m_pos.z -= m_knockback;

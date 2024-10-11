@@ -1,4 +1,4 @@
-#include "Slime.h"
+ï»¿#include "Slime.h"
 #include "Knight.h"
 #include <math.h>
 #include "EffekseerForDXLib.h"
@@ -7,37 +7,37 @@
 
 namespace
 {
-	//“G‚Ì‘¬‚³
+	//æ•µã®é€Ÿã•
 	constexpr float kSpeed = 2.0f;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚¦‚É‚©‚©‚éƒtƒŒ[ƒ€”
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆã«ã‹ã‹ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 	constexpr float kAnimChangeFrame = 4.0f;
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;
 
-	//“G‚ÌÅ‘åHP
+	//æ•µã®æœ€å¤§HP
 	constexpr int kMaxHp = 50;
 
-	//ƒ_ƒ[ƒW”
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸æ•°
 	constexpr int kDamageNum = 10;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	constexpr int kRunAnimIndex = 6;
 
-	//”­¶ˆÊ’u
+	//ç™ºç”Ÿä½ç½®
 	constexpr int kAppearanceX = 750;
 
-	//‰ŠúÀ•W
+	//åˆæœŸåº§æ¨™
 	constexpr float kPosY = 120.0f;
 
-	//“–‚½‚è”»’è‚Ì’²®
+	//å½“ãŸã‚Šåˆ¤å®šã®èª¿æ•´
 	constexpr float kAdj = 45.0f;
 
-	//“–‚½‚è”»’è‚Ì‘å‚«‚³
+	//å½“ãŸã‚Šåˆ¤å®šã®å¤§ãã•
 	constexpr float kModelWidth = 80.0f;
 	constexpr float kModelHeight = 100.0f;
 	constexpr float kModelDepth = 100.0f;
 
-	//ƒvƒŒƒCƒ„[‚ÌˆÊ’u
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®
 	constexpr float kPlayerPos1X = -4500.0f;
 	
 	constexpr float kPlayerPos2X = 265.0f;
@@ -46,41 +46,60 @@ namespace
 
 	constexpr float kPlayerPos4X = 12000.0f;
 
-	//ƒmƒbƒNƒoƒbƒN
+	//ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 	constexpr float kKnockback = 50.0f;
 
 	constexpr float kMaxKnockback = 250.0f;
 
-	//–³“GŠÔ
+	//ç„¡æ•µæ™‚é–“
 	constexpr int  kInvincibleTime = 20;
 
-	//Œü‚¢‚Ä‚¢‚é•ûŒü‚ğo‚·ŒvZ
+	//å‘ã„ã¦ã„ã‚‹æ–¹å‘ã‚’å‡ºã™è¨ˆç®—
 	constexpr float kAngle = 180.0f / PI;
 
-	//Œü‚¢‚Ä‚¢‚é•ûŒü
+	//å‘ã„ã¦ã„ã‚‹æ–¹å‘
 	constexpr int kRotationStandard1 = 30;
 
 	constexpr int kRotationStandard2 = 120;
+
+
+	//HpBarã®ç”»åƒã‚µã‚¤ã‚ºèª¿æ•´
+	constexpr int kHpBarAdjustmentSizeX = 20;
+	constexpr int kHpBarAdjustmentSizeY = 150;
 }
 
 Slime::Slime(int m_handle,VECTOR playerPos) :EnemyBase(m_handle), m_animBlendRate(-1), m_currentAnimNo(-1), m_prevAnimNo(-1)
 {
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰Šúİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæœŸè¨­å®š
 	m_currentAnimNo = MV1AttachAnim(m_handle, kRunAnimIndex, -1, true);
 
-	//HP‚Ì‰Šú‰»
+	//HPãƒãƒ¼ã®ãƒ­ãƒ¼ãƒ‰ã‚’ã™ã‚‹
+	m_maxHpHandle = LoadGraph("data/UI/HpBar_Enemy.png");
+
+	//HPã®åˆæœŸåŒ–
 	m_hp = kMaxHp;
 
-	//–³“GŠÔ‚Ìİ’è
+	//ç„¡æ•µæ™‚é–“ã®è¨­å®š
 	m_invincibleTime = kInvincibleTime;
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	m_isHitAttack = false;
 
 	m_knockback = 0;
 
-	//À•W‚Ìİ’è
+	m_decreaseHp = 0;
+
+	//åº§æ¨™ã®è¨­å®š
 	SetPosX(playerPos);
+
+	//HPãƒãƒ¼ã®ã‚µã‚¤ã‚º
+	GetGraphSize(m_hpHandle, &m_graphSizeX, &m_graphSizeY);
+
+	m_graphSizeX += kHpBarAdjustmentSizeX;
+	m_graphSizeY += kHpBarAdjustmentSizeY;
+
+	//HPã®1ã«å¯¾ã—ã¦ã®å¹…
+	m_hp1Lenght = static_cast<float>(m_graphSizeX) / static_cast<float>(kMaxHp);
 }
 
 Slime::~Slime()
@@ -91,18 +110,21 @@ void Slime::Update(Knight* knight, VECTOR playerPos)
 {
 	if (!m_isHitAttack)
 	{
-		//ƒAƒjƒ[ƒVƒ‡ƒ“
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 		Animation();
 
-		//ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ã
 		ComingPlayer(knight);
 	}
 
-	//Œü‚¢‚Ä‚¢‚é•ûŒü
+	//å‘ã„ã¦ã„ã‚‹æ–¹å‘
 	DirectionFacing();
 
-	//–³“GŠÔ
+	//ç„¡æ•µæ™‚é–“
 	InvincibleTime();
+
+	//HPã®æç”»
+	DrawHpBar();
 
 	m_enemyCollision.SetCenter(m_pos.x- kAdj, m_pos.y, m_pos.z - kAdj, kModelWidth, kModelHeight,kModelDepth);
 }
@@ -138,14 +160,14 @@ void Slime::SetPosX(VECTOR playerPos)
 void Slime::ComingPlayer(Knight* knight)
 {
 	VECTOR playerPos = knight->GetPlayerPos();
-	//“G‚Ì‰ŠúˆÊ’u‚©‚çƒ^[ƒQƒbƒgˆÊ’u‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚ğ¶¬‚·‚é
-	//n“_‚©‚çI“_‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚ğ‹‚ß‚éê‡AI“_‚ÌÀ•W-n“_‚ÌÀ•W‚Å‹‚ß‚é
+	//æ•µã®åˆæœŸä½ç½®ã‹ã‚‰ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä½ç½®ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆã™ã‚‹
+	//å§‹ç‚¹ã‹ã‚‰çµ‚ç‚¹ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹å ´åˆã€çµ‚ç‚¹ã®åº§æ¨™-å§‹ç‚¹ã®åº§æ¨™ã§æ±‚ã‚ã‚‹
 	VECTOR toTarget = VSub(playerPos, m_pos);
 
-	//ƒxƒNƒgƒ‹‚Ì’·‚³‚ğkSpeed‚É‚µ‚Ä‚â‚é
-	//ƒxƒNƒgƒ‹‚Ì³‹K‰»@’·‚³‚ğ‚P‚É‚·‚é
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’kSpeedã«ã—ã¦ã‚„ã‚‹
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®æ­£è¦åŒ–ã€€é•·ã•ã‚’ï¼‘ã«ã™ã‚‹
 	toTarget = VNorm(toTarget);
-	//kSpeed‚Å‚©‚¯‚é
+	//kSpeedã§ã‹ã‘ã‚‹
 	m_distance.x = toTarget.x * kSpeed;
 	m_distance.y = toTarget.y;
 	m_distance.z = toTarget.z * kSpeed;
@@ -153,16 +175,16 @@ void Slime::ComingPlayer(Knight* knight)
 	m_pos = VAdd(m_pos, m_distance);
 
 
-	// ‚R‚cƒ‚ƒfƒ‹‚Q‚©‚ç‚R‚cƒ‚ƒfƒ‹‚P‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚ğZo
+	// ï¼“ï¼¤ãƒ¢ãƒ‡ãƒ«ï¼’ã‹ã‚‰ï¼“ï¼¤ãƒ¢ãƒ‡ãƒ«ï¼‘ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã‚’ç®—å‡º
 	VECTOR SubVector = VSub(playerPos, m_pos);
 
-	// atan2 ‚ğg—p‚µ‚ÄŠp“x‚ğæ“¾
+	// atan2 ã‚’ä½¿ç”¨ã—ã¦è§’åº¦ã‚’å–å¾—
 	m_enemyAngle = atan2(SubVector.x, SubVector.z);
 
-	//ƒvƒŒƒCƒ„[‚Ì•ûŒü‚ğŒü‚­
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ–¹å‘ã‚’å‘ã
 	MV1SetRotationXYZ(m_handle, VGet(0.0f, m_enemyAngle + DX_PI_F, 0.0f));
 
-	//ƒ|ƒWƒVƒ‡ƒ“‚Ìİ’è
+	//ãƒã‚¸ã‚·ãƒ§ãƒ³ã®è¨­å®š
 	MV1SetPosition(m_handle, m_pos);
 }
 
@@ -206,14 +228,21 @@ void Slime::DirectionFacing()
 	}
 }
 
+void Slime::DrawHpBar()
+{
+	//HPãƒãƒ¼ã®è¡¨ç¤º
+	DrawModiBillboard3D(m_pos, (m_graphSizeX * 0.5f),150.0f, (m_hp1Lenght * m_decreaseHp) - (m_graphSizeX * 0.5f), 150.0f,
+		(m_hp1Lenght * m_decreaseHp) - (m_graphSizeX * 0.5f), static_cast<float>(m_graphSizeY), (m_graphSizeX * 0.5f), static_cast<float>(m_graphSizeY), m_maxHpHandle, true);
+}
+
 void Slime::Animation()
 {
 	if (m_prevAnimNo != -1)
 	{
-		//test 8ƒtƒŒ[ƒ€‚ÅØ‚è‘Ö‚¦
+		//test 8ãƒ•ãƒ¬ãƒ¼ãƒ ã§åˆ‡ã‚Šæ›¿ãˆ
 		m_animBlendRate += kAnimChangeRateSpeed;
 		if (m_animBlendRate >= 1.0f) m_animBlendRate = 1.0f;
-		//•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“Š„‡‚ğİ’è‚·‚é
+		//å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å‰²åˆã‚’è¨­å®šã™ã‚‹
 		MV1SetAttachAnimBlendRate(m_handle, m_prevAnimNo, 1.0f - m_animBlendRate);
 		MV1SetAttachAnimBlendRate(m_handle, m_currentAnimNo, m_animBlendRate);
 	}
@@ -230,16 +259,16 @@ void Slime::Animation()
 }
 bool Slime::UpdateAnim(int attachNo)
 {
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¢‚Ì‚ÅI—¹
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒè¨­å®šã•ã‚Œã¦ã„ãªã„ã®ã§çµ‚äº†
 	if (attachNo == -1) return false;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğis‚³‚¹‚é
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é€²è¡Œã•ã›ã‚‹
 	float now = MV1GetAttachAnimTime(m_handle, attachNo);
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“i‚ß‚é
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é€²ã‚ã‚‹
 	now += 0.5f;
 
-	//Œ»İÄ¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘ƒJƒEƒ“ƒg‚ğæ“¾‚·‚é
+	//ç¾åœ¨å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç·ã‚«ã‚¦ãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹
 	float total = MV1GetAttachAnimTotalTime(m_handle, attachNo);
 	bool isLoop = false;
 
@@ -249,31 +278,31 @@ bool Slime::UpdateAnim(int attachNo)
 		isLoop = true;
 	}
 
-	//i‚ß‚½ŠÔ‚Éİ’è
+	//é€²ã‚ãŸæ™‚é–“ã«è¨­å®š
 	MV1SetAttachAnimTime(m_handle, attachNo, now);
 	return isLoop;
 }
 
 void Slime::ChangeAnim(int animIndex)
 {
-	//‚³‚ç‚ÉŒÃ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡‚Í‚±‚Ì“_‚Åíœ‚µ‚Ä‚¨‚­
+	//ã•ã‚‰ã«å¤ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ã“ã®æ™‚ç‚¹ã§å‰Šé™¤ã—ã¦ãŠã
 	if (m_prevAnimNo != -1)
 	{
 		MV1DetachAnim(m_handle, m_prevAnimNo);
 	}
 
-	//Œ»İÄ¶’†‚Ì‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚Í•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆµ‚¢‚É
+	//ç¾åœ¨å†ç”Ÿä¸­ã®å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¯å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ‰±ã„ã«
 	m_prevAnimNo = m_currentAnimNo;
 
-	//•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Æ‚µ‚ÄUŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‰ü‚ß‚Äİ’è‚·‚é
+	//å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦æ”»æ’ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ”¹ã‚ã¦è¨­å®šã™ã‚‹
 	m_currentAnimNo = MV1AttachAnim(m_handle, animIndex, -1, false);
 
-	//Ø‚è‘Ö‚¦‚ÌuŠÔ‚Í•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶‚³‚ê‚éó‘Ô‚É‚·‚é
+	//åˆ‡ã‚Šæ›¿ãˆã®ç¬é–“ã¯å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå†ç”Ÿã•ã‚Œã‚‹çŠ¶æ…‹ã«ã™ã‚‹
 	m_animBlendRate = 0.0f;
 
-	//•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“100%
+	//å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³100%
 	MV1SetAttachAnimBlendRate(m_handle, m_prevAnimNo, 1.0f - m_animBlendRate);
-	//•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“0%
+	//å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³0%
 	MV1SetAttachAnimBlendRate(m_handle, m_currentAnimNo, m_animBlendRate);
 }
 
@@ -288,8 +317,7 @@ void Slime::HitAttack(Knight* knight)
 
 		m_hp -= kDamageNum;
 
-		
-
+		m_decreaseHp += kDamageNum;
 
 		m_isHitAttack = true;
 	}

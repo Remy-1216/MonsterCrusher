@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "enemybase.h"
 #include "Rect.h"
 class Slime :public EnemyBase
@@ -9,56 +9,59 @@ public:
 
 	void Update(Knight* knigh, VECTOR playerPos)override;
 
-	//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚É‚æ‚Á‚Ä¶¬‚·‚éˆÊ’u‚ğ•Ï‚¦‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã«ã‚ˆã£ã¦ç”Ÿæˆã™ã‚‹ä½ç½®ã‚’å¤‰ãˆã‚‹
 	void SetPosX(VECTOR playerPos)override;
 
-	//UŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
+	//æ”»æ’ƒãŒå½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void HitAttack(Knight*knight);
 
-	//ƒvƒŒƒCƒ„[‚É‚ ‚½‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚ãŸã‚‹
 	void HitPlayer(Knight*knight, Rect playerCollision);
 
-	//ƒXƒ‰ƒCƒ€‚Ì“–‚½‚è”»’è‚ğ—^‚¦‚é
+	//ã‚¹ãƒ©ã‚¤ãƒ ã®å½“ãŸã‚Šåˆ¤å®šã‚’ä¸ãˆã‚‹
 	Rect GetSlimeCollision() const noexcept { return m_enemyCollision; }
 
-	//ƒXƒ‰ƒCƒ€‚Ì‘Ì—Í‚ğ—^‚¦‚é
+	//ã‚¹ãƒ©ã‚¤ãƒ ã®ä½“åŠ›ã‚’ä¸ãˆã‚‹
 	int GetSlimeHp() const noexcept { return m_hp; }
 
-	//“–‚½‚Á‚½‚©‚Ç‚¤‚©‚ğ—^‚¦‚é
+	//å½“ãŸã£ãŸã‹ã©ã†ã‹ã‚’ä¸ãˆã‚‹
 	bool GetHitPlayer() const noexcept { return m_isHitPlayer; }
 
 private:
-	//ƒvƒŒƒCƒ„[‚É­‚µ‚Ã‚Â‹ß‚Ã‚­
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å°‘ã—ã¥ã¤è¿‘ã¥ã
 	void ComingPlayer(Knight* knight);
 
-	//–³“G
+	//ç„¡æ•µ
 	void InvincibleTime();
 
-	//‚Ç‚Á‚¿Œü‚¢‚Ä‚¢‚é‚Ì‚©
+	//ã©ã£ã¡å‘ã„ã¦ã„ã‚‹ã®ã‹
 	void DirectionFacing();
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖ˜A
+	//HPãƒãƒ¼ã®è¡¨ç¤º
+	void DrawHpBar();
+
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
 	void  Animation();
 
-	//ƒ‹[ƒv‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·
+	//ãƒ«ãƒ¼ãƒ—ã—ãŸã‹ã©ã†ã‹ã‚’è¿”ã™
 	bool UpdateAnim(int attachNo);
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì•ÏX
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å¤‰æ›´
 	void ChangeAnim(int animIndex);
 
 	
 
 	
 private:
-	//ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
-	int m_currentAnimNo;	//Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	int m_prevAnimNo;		//•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	float m_animBlendRate;	//ƒAƒjƒ[ƒVƒ‡ƒ“‡¬Š„‡
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+	int m_currentAnimNo;	//ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	int m_prevAnimNo;		//å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	float m_animBlendRate;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆæˆå‰²åˆ
 
-	//ƒ‰ƒ“ƒ_ƒ€‚ÈˆÊ’u
+	//ãƒ©ãƒ³ãƒ€ãƒ ãªä½ç½®
 	float m_randomPosX;
 
-	//i‚Ş‹——£
+	//é€²ã‚€è·é›¢
 	VECTOR m_distance;
 };
 
