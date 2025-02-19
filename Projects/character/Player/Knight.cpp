@@ -473,6 +473,8 @@ void Knight::Animation()
 			}
 		}
 	}
+
+	//攻撃時
 	if (m_state == kAttack)
 	{
 		if (m_isAttacking != m_isAttack)
